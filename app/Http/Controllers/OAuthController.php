@@ -26,7 +26,7 @@ class OAuthController extends Controller {
         ]);
 
 
-        if($request->ok()){
+        if($response->ok()){
             app('log')->debug('BC Install Response', ['response' => $response->json()]);
         }
 
@@ -36,6 +36,15 @@ class OAuthController extends Controller {
         }
 
         return redirect('/');
+    }
+
+
+    public function load(){
+
+    }
+
+    public function remove(){
+
     }
 
 }
