@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('oauth')->group(function () {
+Route::prefix('oauth')->middleware('iframe')->group(function () {
     Route::get('/install', [OAuthController::class, 'install'])->name('oauth.install');
     Route::get('/load', [OAuthController::class, 'load'])->name('oauth.load');
     Route::get('/remove', [OAuthController::class, 'remove'])->name('oauth.remove');
