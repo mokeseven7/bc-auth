@@ -13,9 +13,9 @@ class AppAuthentication {
         $session = new Session([
             'access_token'      => $session_data['access_token'],
             'scope'             => $session_data['scope'],
-            'user_id'           => $session_data['user_id'],
-            'username'          => $session_data['username'],
-            'email'             => $session_data['email'],
+            'user_id'           => $session_data['user']['id'],
+            'username'          => $session_data['user']['username'],
+            'email'             => $session_data['user']['email'],
             'context'           => $session_data['context'],
             'account_uuid'      => $session_data['account_uuid'],
         ]);
