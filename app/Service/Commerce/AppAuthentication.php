@@ -22,6 +22,7 @@ class AppAuthentication {
 
         $session->save();
 
+
         \session('installer_id', $session->id);
     }
 

@@ -18,24 +18,16 @@ class OAuthController extends Controller {
     public function install(Request $request, AppAuthentication $auth){
         
         $response = Http::token($request->input('installer'));
-
-        if($response->ok){
-            $auth->create_session($response);
-        }
-
+        app('log')->debug('INSTALL SUCCESS', ['response' => $response]);
+        
         if($response->ok()){
-            $data = $response->json();
-
-            $request->session()->put('store_hash', $data['context']);
-            $request->session()->put('access_token', $data['access_token']);
-            $request->session()->put('user_id', $data['user']['id']);
-            $request->session()->put('user_email', $data['user']['email']);
-
-            app('log')->debug('INSTALL SUCCESS', ['data' => $data, 'request' => $request]);
-
+            $auth->create_session($response);
         }else{
             app('log')->debug('INSTALL FAIL', ['response' => $response->json()]);
+
         }
+
+
 
         // If the merchant installed the app via an external link, redirect back to the success page
         if ($request->has('external_install')) {
