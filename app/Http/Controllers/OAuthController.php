@@ -28,7 +28,15 @@ class OAuthController extends Controller {
 
 
         if($response->ok()){
-            app('log')->debug('BC Install Response', ['response' => $response->json()]);
+            $data = $response->json();
+
+            $request->session()->put('store_hash', $data['context']);
+            $request->session()->put('access_token', $data['access_token']);
+            $request->session()->put('user_id', $data['user']['id']);
+            $request->session()->put('user_email', $data['user']['email']);
+
+            app('log')->debug('BC Install Response', ['data' => $data]);
+
         }else{
             app('log')->debug('BC Install Response', ['response' => $response->json()]);
         }
@@ -42,8 +50,12 @@ class OAuthController extends Controller {
     }
 
 
-    public function load(){
+    public function load(Request $request){
+        $signed = $request->input('signed_payload');
 
+        app('log')->debug('signed_payload', ['signed' => $signed, 'request' => $request]);
+
+        return redirect('/');
     }
 
     public function remove(){
