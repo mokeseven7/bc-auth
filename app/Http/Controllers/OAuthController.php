@@ -18,13 +18,11 @@ class OAuthController extends Controller {
     public function install(Request $request, AppAuthentication $auth){
         
         $response = Http::token($request->input('installer'));
-        app('log')->debug('INSTALL SUCCESS', ['response' => $response]);
         
         if($response->ok()){
             $auth->create_session($response);
         }else{
             app('log')->debug('INSTALL FAIL', ['response' => $response->json()]);
-
         }
 
 
@@ -38,10 +36,10 @@ class OAuthController extends Controller {
     }
 
 
-    public function load(Request $request){
-        $signed = $request->input('signed_payload');
+    public function load(Request $request, AppAuthentication $auth){
+        $decoded = $auth->decode_signed($request->input('signed_payload'));
 
-        app('log')->debug('signed_payload', ['signed' => $signed, 'request' => $request]);
+        app('log')->debug('signed_payload', ['decoded' => $decoded, 'request' => $request]);
 
         return view('welcome');
     }

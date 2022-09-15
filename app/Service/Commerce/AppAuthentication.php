@@ -26,4 +26,11 @@ class AppAuthentication {
         \session('installer_id', $session->id);
     }
 
+    public function decode_signed($payload){
+        $decoded = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $payload)[1]))));
+
+        
+
+    }
+
 }
