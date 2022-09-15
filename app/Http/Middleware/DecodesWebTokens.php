@@ -16,9 +16,12 @@ class AllowsIframes
      */
     public function handle(Request $request, Closure $next)
     {
-        $response = $next($request);
-        $response->header('X-Frame-Options', 'ALLOW FROM ' . env('APP_URL'));
-        return $response;
+        $one = explode('.', $request->input('signed'));
+        $two = str_replace('-','+', $one[1]);
+        $three = str_replace('_', '/', $two);
+        $four = base64_decode($three);
+        $five = \json_decode($four);
+
 
     }
 }

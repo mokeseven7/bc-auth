@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\AllowsIframes;
+use App\Http\Middleware\ValidatesInstallerInputs;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -44,6 +45,10 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'commerce' => [
+            \App\Http\Middleware\ValidatesInstallerInputs::class,
+            \App\Http\Middleware\DecoratesInstallerRequest::class,
+        ]
     ];
 
     /**

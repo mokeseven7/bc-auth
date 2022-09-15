@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\Commerce\AppAuthentication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -14,18 +15,13 @@ class OAuthController extends Controller {
      * @param \Illuminate\Http\Request $request 
      * @return void 
      */
-    public function install(Request $request){
+    public function install(Request $request, AppAuthentication $auth){
         
-        $response = Http::withOptions(['debug' => true])->post('https://login.bigcommerce.com/oauth2/token', [
-            'client_id' => config('commerce.client_id'),
-            'client_secret' => config('commerce.client_secret'),
-            'redirect_uri' => config('commerce.redirect_url'),
-            'grant_type' => 'authorization_code',
-            'code' => $request->input('code'),
-            'scope' => $request->input('scope'),
-            'context' => $request->input('context'),
-        ]);
+        $response = Http::token($request->input('installer'));
 
+        if($response->ok){
+            $auth->create_session($response);
+        }
 
         if($response->ok()){
             $data = $response->json();
