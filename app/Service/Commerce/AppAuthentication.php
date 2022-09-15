@@ -15,7 +15,7 @@ class AppAuthentication {
             'scope'             => $session_data['scope'],
             'user_id'           => $session_data['user']['id'],
             'username'          => $session_data['user']['username'],
-            'email'             => $session_data['user']['email'],
+            'user_email'             => $session_data['user']['email'],
             'context'           => $session_data['context'],
             'account_uuid'      => $session_data['account_uuid'],
         ]);
