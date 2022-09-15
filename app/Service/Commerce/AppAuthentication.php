@@ -15,7 +15,7 @@ class AppAuthentication {
             'scope'             => $session_data['scope'],
             'user_id'           => $session_data['user']['id'],
             'username'          => $session_data['user']['username'],
-            'user_email'             => $session_data['user']['email'],
+            'user_email'        => $session_data['user']['email'],
             'context'           => $session_data['context'],
             'account_uuid'      => $session_data['account_uuid'],
         ]);
@@ -27,10 +27,18 @@ class AppAuthentication {
     }
 
     public function decode_signed($payload){
+        app('log')->debug('payload', ['payload' => $payload]);
+        
         $decoded = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $payload)[1]))));
 
-        
+        return $decoded;
+
+
 
     }
 
+
+    public function validate_signature(){
+
+    }
 }
