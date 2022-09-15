@@ -19,7 +19,7 @@ class OAuthController extends Controller {
         $response = Http::withOptions(['debug' => true])->post('https://login.bigcommerce.com/oauth2/token', [
             'client_id' => config('commerce.client_id'),
             'client_secret' => config('commerce.client_secret'),
-            'redirect_uri' => env('APP_URL') . '/auth/install',
+            'redirect_uri' => config('commerce.redirect_url'),
             'grant_type' => 'authorization_code',
             'code' => $request->input('code'),
             'scope' => $request->input('scope'),
