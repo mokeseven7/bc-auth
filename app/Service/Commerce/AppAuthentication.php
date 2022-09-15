@@ -27,13 +27,17 @@ class AppAuthentication {
     }
 
     public function decode_signed($payload){
-        app('log')->debug('payload', ['payload' => $payload]);
+        list($encoded_data, $encoded_signature) = explode('.', $payload, 2);
         
-        $decoded = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $payload)[1]))));
+        $data = \base64_decode($encoded_data);
+        $signature = \base64_decode($encoded_signature);
+       
+        $signature_should_match = hash_hmac('sha256', $data, config('commerce.client_secret'), $raw = false);
 
-        return $decoded;
+        //Compare the two signatures using time safe comparison
+        if(!hash_equals($signature, $signature_should_match)){
 
-
+        }
 
     }
 
