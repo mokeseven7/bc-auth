@@ -15,7 +15,8 @@ class OAuthController extends Controller {
      * @return void 
      */
     public function install(Request $request){
-        $response = Http::post('https://login.bigcommerce.com/oauth2/token', [
+        
+        $response = Http::withOptions(['debug' => true])->post('https://login.bigcommerce.com/oauth2/token', [
             'client_id' => config('commerce.client_id'),
             'client_secret' => config('commerce.client_secret'),
             'redirect_uri' => env('APP_URL') . '/auth/install',
@@ -27,6 +28,8 @@ class OAuthController extends Controller {
 
 
         if($response->ok()){
+            app('log')->debug('BC Install Response', ['response' => $response->json()]);
+        }else{
             app('log')->debug('BC Install Response', ['response' => $response->json()]);
         }
 
