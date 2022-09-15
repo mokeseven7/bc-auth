@@ -8,7 +8,7 @@ class AppAuthentication {
 
     public function create_session(\Illuminate\Http\Client\Response $token_response){
         
-        $session_data = $token_response->json('data');
+        $session_data = $token_response->json();
         
         $session = new Session([
             'access_token'      => $session_data['access_token'],
