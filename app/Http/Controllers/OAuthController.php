@@ -35,10 +35,10 @@ class OAuthController extends Controller {
             $request->session()->put('user_id', $data['user']['id']);
             $request->session()->put('user_email', $data['user']['email']);
 
-            app('log')->debug('BC Install Response', ['data' => $data]);
+            app('log')->debug('INSTALL SUCCESS', ['data' => $data, 'request' => $request]);
 
         }else{
-            app('log')->debug('BC Install Response', ['response' => $response->json()]);
+            app('log')->debug('INSTALL FAIL', ['response' => $response->json()]);
         }
 
         // If the merchant installed the app via an external link, redirect back to the success page
@@ -46,7 +46,7 @@ class OAuthController extends Controller {
             return redirect('https://login.bigcommerce.com/app/' . config('commerce.client_id') . '/install/succeeded');
         }
 
-        return redirect('/');
+        return view('welcome');
     }
 
 
