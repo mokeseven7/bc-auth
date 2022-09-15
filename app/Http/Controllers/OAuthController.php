@@ -55,7 +55,7 @@ class OAuthController extends Controller {
 
         app('log')->debug('signed_payload', ['signed' => $signed, 'request' => $request]);
 
-        return redirect('/');
+        return view('welcome');
     }
 
     public function remove(){
