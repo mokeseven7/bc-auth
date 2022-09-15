@@ -25,6 +25,11 @@ class OAuthController extends Controller {
             'context' => $request->input('context'),
         ]);
 
+
+        if($request->ok()){
+            app('log')->debug('BC Install Response', ['response' => $response->json()]);
+        }
+
         // If the merchant installed the app via an external link, redirect back to the success page
         if ($request->has('external_install')) {
             return redirect('https://login.bigcommerce.com/app/' . config('commerce.client_id') . '/install/succeeded');
