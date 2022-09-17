@@ -27,7 +27,7 @@ Route::prefix('oauth')->group(function () {
 });
 
 Route::prefix('hello')->group(function () {
-    Route::get('/callback', [HelloSignOauthController::class, 'callback']);
+    Route::post('/callback', [HelloSignOauthController::class, 'callback']);
     // Route::get('/load', [OAuthController::class, 'load'])->middleware('decodes.tokens')->name('oauth.load');
     // Route::get('/remove', [OAuthController::class, 'remove'])->name('oauth.remove');
 });
