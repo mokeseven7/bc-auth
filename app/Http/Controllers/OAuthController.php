@@ -37,10 +37,6 @@ class OAuthController extends Controller {
 
 
     public function load(Request $request, AppAuthentication $auth){
-        $decoded = $auth->decode_signed($request->input('signed_payload'));
-
-        app('log')->debug('signed_payload', ['decoded' => $decoded, 'request' => $request]);
-
         return view('welcome');
     }
 

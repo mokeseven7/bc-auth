@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Hello\HelloSignOauthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OAuthController;
 
@@ -23,4 +24,10 @@ Route::prefix('oauth')->group(function () {
     Route::get('/install', [OAuthController::class, 'install'])->middleware('commerce')->name('oauth.install');
     Route::get('/load', [OAuthController::class, 'load'])->middleware('decodes.tokens')->name('oauth.load');
     Route::get('/remove', [OAuthController::class, 'remove'])->name('oauth.remove');
+});
+
+Route::prefix('hello')->group(function () {
+    Route::get('/callback', [HelloSignOauthController::class, 'callback']);
+    // Route::get('/load', [OAuthController::class, 'load'])->middleware('decodes.tokens')->name('oauth.load');
+    // Route::get('/remove', [OAuthController::class, 'remove'])->name('oauth.remove');
 });
