@@ -19,10 +19,12 @@ class DecodesWebTokens
 
         if($request->missing('signed_payload')){
             return response()->json(['message' => 'Missing Required Properties'], 400);
+        }else{
+            $this->decode_parts($request);
         }
 
-        list($encoded_data, $encoded_signature) = explode('.', $request->input('signed_payload'), 2);
         
+        list($encoded_data, $encoded_signature) = explode('.', $request->input('signed_payload'), 2);
         $data = \base64_decode($encoded_data);
         $signature = \base64_decode($encoded_signature);
        
@@ -34,6 +36,20 @@ class DecodesWebTokens
         }
 
         return $next($request);
+
+    }
+
+    private function decode_parts($request){
+        // Create variables for each part of the jwt (header, data, signature)
+        list($encoded_header, $encoded_body, $encoded_signature) = explode('.', $request->input('signed_payload'), 3);
+        
+        $parts = [
+            'header'    => \base64_decode($encoded_header),
+            'body'      => \base64_decode($encoded_body),
+            'signature' => \base64_decode($encoded_signature),
+        ];
+
+        app('log')->debug(__CLASS__, $parts);
 
     }
 }
