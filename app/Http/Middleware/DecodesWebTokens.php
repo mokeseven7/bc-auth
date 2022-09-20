@@ -41,12 +41,12 @@ class DecodesWebTokens
 
     private function decode_parts($request){
         // Create variables for each part of the jwt (header, data, signature)
-        list($encoded_header, $encoded_body, $encoded_signature) = explode('.', $request->input('signed_payload'), 3);
+        $parts = \explode('.', $request->input('signed_payload'));
         
         $parts = [
-            'header'    => \base64_decode($encoded_header),
-            'body'      => \base64_decode($encoded_body),
-            'signature' => \base64_decode($encoded_signature),
+            'header'    => \base64_decode($parts[0]),
+            'body'      => \base64_decode($parts[1]),
+            'signature' => \base64_decode($parts[2]),
         ];
 
         app('log')->debug(__CLASS__, $parts);
