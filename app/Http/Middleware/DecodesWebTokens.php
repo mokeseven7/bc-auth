@@ -45,8 +45,7 @@ class DecodesWebTokens
         
         $parts = [
             'header'    => \base64_decode($parts[0]),
-            'body'      => \base64_decode($parts[1]),
-            'signature' => \base64_decode($parts[2]),
+            'signature'      => \base64_decode($parts[1]),
         ];
 
         app('log')->debug(__CLASS__, $parts);
